@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+	http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+
+
+	<import resource="classpath:META-INF/cxf/cxf.xml" />
+
+	<import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" />
+
+
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+
+	<bean id="userDao" class="com.dpc.dao.impl.UserDaoImpl" />
+
+	<bean id="userService" name="userService" class="com.dpc.service.impl.UserServiceImpl">
+		<property name="userDao">
+			<ref bean="userDao" />
+		</property>
+	</bean>
+
+	<bean id="userWebService" class="com.dpc.ws.impl.WebServiceForAppImpl">
+		<property name="userService">
+			<ref bean="userService" />
+		</property>
+		<property name="bloodPresureService">
+			<ref bean="bloodPresureService"/>
+		</property>
+		
+		<property name="bloodSugarService">
+			<ref bean="bloodSugarService"/>
+		</property>
+		
+		<property name="pushService" ref="pushService"></property>
+		<property name="yuyueInfoService">
+			<ref bean="yuyueInfoService"/>
+		</property>
+		<property name="doctorInfoService">
+			<ref bean="doctorInfoService"/>
+		</property>
+	</bean>
+
+	<!-- 用户信息服务的web service -->
+	<jaxws:endpoint implementor="#userWebService" address="/userService">
+		<jaxws:outInterceptors>
+			<bean class="org.apache.cxf.interceptor.LoggingOutInterceptor"/>
+		</jaxws:outInterceptors>
+		<jaxws:inInterceptors>
+			<bean class="org.apache.cxf.interceptor.LoggingInInterceptor"></bean>
+		</jaxws:inInterceptors>
+	</jaxws:endpoint>
+	
+	
+	<bean id="bloodPresureDao" class="com.dpc.dao.impl.BloodPresureDaoImpl"></bean>
+	
+	<bean id="bloodPresureService" class="com.dpc.service.impl.BloodPresureServiceImpl">
+		<property name="bloodPresureDao" ref="bloodPresureDao"></property>
+	</bean>
+	
+	<bean id="bloodSugarDao" class="com.dpc.dao.impl.BloodSugarDaoImpl"></bean>
+	
+	<bean id="bloodSugarService" class="com.dpc.service.impl.BloodSugarServiceImpl">
+		<property name="bloodSugarDao" ref="bloodSugarDao"></property>
+	</bean>
+	
+	<bean id="yuyueInfoDao" class="com.dpc.dao.impl.YuyueInfoDaoImpl"></bean>
+	
+	<bean id="yuyueInfoService" class="com.dpc.service.impl.YuyueInfoServiceImpl">
+		<property name="yuyueInfoDao" ref="yuyueInfoDao"></property>
+	</bean>
+	
+	<bean id="doctorInfoDao" class="com.dpc.dao.impl.DoctorInfoDaoImpl"></bean>
+	
+	<bean id="doctorInfoService" class="com.dpc.service.impl.DoctorInfoServiceImpl">
+		<property name="doctorInfoDao" ref="doctorInfoDao"></property>
+	</bean>
+	
+	<!-- 医生用户信息Dao类 -->
+	<bean id="doctorUserDao" class="com.dpc.dao.impl.DoctorUserDaoImpl" />
+	
+	<!-- 医生用户信息服务类 -->
+	<bean id="doctorUserService" class="com.dpc.service.impl.DoctorUserServiceImpl">
+		<property name="doctorUserDao" ref="doctorUserDao"></property>
+	</bean>
+	
+	
+	<!-- push消息的dao类 -->
+	<bean id="userPushListDao" class="com.dpc.dao.impl.UserPushListDaoImpl"></bean>
+	
+	<!-- pushService的服务类 -->
+	<bean id="pushService" class="com.dpc.service.impl.PushServiceImpl">
+		<property name="userPushListDao" ref="userPushListDao"></property>
+	</bean>
+		
+	<bean id="chartAction" class="com.dpc.action.ChartAction">
+		<property name="bloodPresureService" ref="bloodPresureService"></property>
+		<property name="userService" ref="userService"></property>
+		<property name="bloodSugarService" ref="bloodSugarService"></property>
+	</bean>
+	<bean id="pushAction" class="com.dpc.action.PushAction">
+		<property name="pushService" ref="pushService"></property>
+		
+	</bean>
+	
+	<bean id="loginAction" class="com.dpc.action.LoginAction">
+		<property name="doctorUserService" ref="doctorUserService"></property>
+	</bean>
+	
+	<bean id="userAction" class="com.dpc.action.UserAction">
+		<property name="userService" ref="userService"></property>
+	</bean>
+	
+	<bean id="doctorACtion" class="com.dpc.action.DoctorAction">
+		<property name="doctorUserService" ref="doctorUserService"></property>
+	</bean>
+	                                                                                              
+</beans>

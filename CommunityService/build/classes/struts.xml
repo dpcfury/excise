@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="commityService" extends="struts-default" namespace="/">
+		
+	<action name="loginAction" class="com.dpc.action.LoginAction">
+	<result name="doctor_login_failure">/login.html</result>
+	<result name="doctor_login_success">/main.jsp</result>
+	</action>
+	
+	<action name="logout" class="com.dpc.action.LoginAction" method="logout">
+		<result name="login">/login.html</result>
+	</action>
+	
+	<action name="chart*" class="com.dpc.action.ChartAction" method="{1}">	
+		<result name="show_pressure_record">/chart/chart.jsp</result>
+		<result name="show_sugar_record">/chart/sugar_record.jsp</result>
+	</action>	
+	
+	<action name="Push*" class="com.dpc.action.PushAction" method="{1}">	
+		<result name="success">/chart/send_tip.jsp</result>
+		<result name="sendBroadCastMessage_success">/message/send_tip.jsp</result>
+	</action>
+	
+	<action name="User*" class="com.dpc.action.UserAction" method="{1}">
+		<result name="userList">/user/listUsers.jsp</result>
+		<result name="HBPUserList">/user/listUsersWithHBP.jsp</result>
+		<result name="HBSUserList">/user/listUsersWithHBS.jsp</result>
+	</action>
+	
+	<action name="Appointment*" class="com.dpc.action.AppointmentAction" method="{1}">
+		<result name="yuyueInfoList">/yuyue/listYuyueInfo.jsp</result>
+		<result name="delete_success">/yuyue/operation_tip.jsp</result>
+	</action>
+	
+	<action name="Doctor*" class="com.dpc.action.DoctorAction" method="{1}">
+		<result name="update_success">/setqueryinfo.jsp</result>
+		<result name="queryInfo_success">/setqueryinfo.jsp</result>
+		<result name="showInfoForUpdate_success">/setimproveinfo.jsp</result>
+	</action>
+	
+	</package>
+	
+	
+
+</struts>    

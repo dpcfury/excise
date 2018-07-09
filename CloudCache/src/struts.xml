@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+
+<package name="cloudService" extends="struts-default" namespace="/">
+
+	<action name="Account*" class="com.cloud.action.AccountAction" method="{1}">
+		<result name="cloudUser_login_success">/user/usermain.jsp</result>
+		<result name="cloudAdmin_login_success">/admin/adminmain.jsp</result>
+		<result name="login">/main.html</result>
+		<result name="cloudUser_register_success">/main.html</result>
+	</action>
+	
+	<action name="Cluster*" class="com.cloud.action.ClusterAction" method="{1}">
+		<result name="getUserClusterList_success">/user/cluster/clusterNodeList.jsp</result>
+		<result name="none">/main.html</result>
+		<result name="getMyClusterStatus_success">/user/cluster/showclusterstatus.jsp</result>
+		<result name="apply_cluster_edit">/user/cluster/applyCluster.jsp</result>
+		<result name="apply_cluster_done">/user/cluster/applyClusterDone.jsp</result>
+		<result name="list_all_applications">/admin/cluster/showUserRequest.jsp</result>
+		<result name="start_deal_request">/admin/cluster/dealUserRequest.jsp</result>
+		<result name="create_user_cluster_success">/admin/cluster/delClusterResult.jsp</result>
+		<result name="show_request_result">/user/cluster/showRequestResult.jsp</result>
+		<result name="add_node_edit">/user/cluster/requestForMoreMem.jsp</result>
+		<result name="begin_to_add">/admin/cluster/dealUserAddRequest.jsp</result>
+		<result name="show_cluster_status">/admin/cluster/checkClusterStatus.jsp</result>
+	</action>
+</package>
+
+</struts>    

@@ -1,0 +1,462 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Powerful Jedis</title>
+</head>
+
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css"
+	href="font-awesome/css/font-awesome.min.css">
+<style type="text/css">
+body {
+	background-color: #CCC;
+}
+
+.navbar {
+	margin-bottom: 0px;
+}
+
+.jumbotron {
+	text-align: center;
+	background: url(img/back.jpg);
+	margin-bottom: 0px;
+}
+
+.masthead {
+	padding: 90px 0 110px;
+}
+
+header {
+	margin-bottom: 50px;
+}
+
+img {
+	vertical-align: middle;
+	display: block;
+	height: 125px;
+	margin: 0 auto 1em;
+}
+
+.well {
+	margin-bottom: 0px;
+}
+
+.modal-content {
+	background: url(img/login-back2.jpg);
+}
+</style>
+<body>
+	<div>
+
+		<nav class="navbar navbar-inverse" role="navigation">
+		<div class="container">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">Our's Jedis</a>
+			</div>
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse"
+				id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="#">首页</a></li>
+					<li><a href="#">Link</a></li>
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown">Dropdown <span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="#">Action</a></li>
+							<li><a href="#">Another action</a></li>
+							<li><a href="#">Something else here</a></li>
+							<li class="divider"></li>
+							<li><a href="#">Separated link</a></li>
+							<li class="divider"></li>
+							<li><a href="#">One more separated link</a></li>
+						</ul></li>
+				</ul>
+				<form class="navbar-form navbar-left" role="search">
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Search">
+					</div>
+					<button type="submit" class="btn btn-default">Submit</button>
+				</form>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a  class ="btn" data-toggle="modal" data-target="#userRegisterModal">注册</a></li>
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown">登录 <span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a data-toggle="modal" data-target="#userModal">普通用户</a></li>
+							<li class="divider"></li>
+							<li><a data-toggle="modal" data-target="#adminModal">管理员</a></li>
+						</ul></li>
+				</ul>
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container-fluid --> </nav>
+
+
+	<!-- 用户注册的模态框-->
+		<div class="modal fade" id="userRegisterModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+						</button>
+						<h3 class="modal-title text-center" id="myModalLabel">
+							<strong>用户注册</strong>
+						</h3>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal" role="form"
+							action="AccountcloudUserRegister.action" method="post">
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-2 control-label">用户名</label>
+								<div class="col-sm-10">
+									<div class="input-group">
+										<span class="input-group-addon"><i
+											class="fa fa-user fa-fw"></i></span> <input type="text"
+											class="form-control" id="inputEmail3" placeholder="userName"
+											name="cloudUser.userName">
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="inputPassword3" class="col-sm-2 control-label">口令</label>
+								<div class="col-sm-10">
+									<div class="input-group">
+										<span class="input-group-addon"><i
+											class="fa fa-key fa-fw"></i></span> <input type="password"
+											class="form-control" id="inputPassword3"
+											placeholder="Password" name="cloudUser.password">
+									</div>
+								</div>
+							</div>
+							
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+						<button type="submit" class="btn btn-primary">提交</button>
+					</div>
+					
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+		<!-- 用户登录的模态框-->
+		<div class="modal fade" id="userModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+						</button>
+						<h3 class="modal-title text-center" id="myModalLabel">
+							<strong>用户登陆</strong>
+						</h3>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal" role="form"
+							action="AccountcloudUserLogin.action" method="post">
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-2 control-label">用户名</label>
+								<div class="col-sm-10">
+									<div class="input-group">
+										<span class="input-group-addon"><i
+											class="fa fa-user fa-fw"></i></span> <input type="text"
+											class="form-control" id="inputEmail3" placeholder="userName"
+											name="userName">
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="inputPassword3" class="col-sm-2 control-label">口令</label>
+								<div class="col-sm-10">
+									<div class="input-group">
+										<span class="input-group-addon"><i
+											class="fa fa-key fa-fw"></i></span> <input type="password"
+											class="form-control" id="inputPassword3"
+											placeholder="Password" name="password">
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-2 col-sm-10">
+									<div class="checkbox">
+										<label> <input type="checkbox"> 记住我
+										</label>
+									</div>
+								</div>
+							</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+						<button type="submit" class="btn btn-primary">确认</button>
+					</div>
+					
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- 模态框-->
+	<!-- Modal -->
+	<div class="modal fade" id="adminModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+					<h3 class="modal-title text-center" id="myModalLabel">
+						<strong>管理员登陆</strong>
+					</h3>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal" role="form" action="AccountcloudAdminLogin.action" method="post">
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">用户名</label>
+							<div class="col-sm-10">
+							<div class="input-group">
+    <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+								<input type="text" class="form-control" id="inputEmail3"
+									placeholder="userName" name="adminName">
+							</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputPassword3" class="col-sm-2 control-label">口令</label>
+							<div class="col-sm-10">
+							<div class="input-group">
+										<span class="input-group-addon"><i
+											class="fa fa-key fa-fw"></i></span>
+								<input type="password" class="form-control" id="inputPassword3"
+									placeholder="Password" name="adminPassword">
+							</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-offset-2 col-sm-10">
+								<div class="checkbox">
+									<label> <input type="checkbox"> 记住我
+									</label>
+								</div>
+							</div>
+						</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					<button type="submit" class="btn btn-primary">确认</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<!--大图片背景部分 -->
+	<div class="jumbotron masthead">
+		<div class="container">
+			<h1>Our's Jedis</h1>
+			<h2>更快，更高效，集大成的弹性云缓存</h2>
+			<p class="masthead-button-links">
+				<a class="btn btn-lg btn-primary btn-shadow"
+					href="http://v3.bootcss.com/" target="_blank" role="button">latest
+					JAR包下载<i class="fa fa-download fa-fw"></i>
+				</a>
+			</p>
+
+		</div>
+	</div>
+
+	<!-- contnet-->
+
+
+	<div class="well">
+		<div class="container">
+			<header class="col-xs-12 text-center">
+			<h1 class="text-center">With redis-cluster</h1>
+			<p class="text-center text-muted">
+				<strong>Our platform empowers developers, IT/Ops, and
+					business leaders to transform their business using real-time data
+					directly from production software.</strong>
+			</p>
+			</header>
+
+			<div class="row">
+				<div class="col-md-4 col-xs-12 text-center">
+					<img src="img/Homepage_AppPerf.svg"
+						alt="application performance icon">
+					<p>
+						<strong>Cluster Performance</strong>
+					</p>
+					<p>Complete performance visibility for all aspects of your
+						software environment.</p>
+				</div>
+				<div class="col-md-4 col-xs-12 text-center">
+					<img src="img/Homepage_CustExp.svg" alt="customer experience icon">
+					<p>
+						<strong>Customer Experience</strong>
+					</p>
+					<p>Know your customer’s true experience with our clients</p>
+				</div>
+				<div class="col-md-4 col-xs-12 text-center">
+					<img src="img/Homepage_BizSuc.svg" alt="business success icon">
+					<p>
+						<strong>Business Success</strong>
+					</p>
+					<p>Understand the stories your data is telling you about your
+						business.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 标签页对我们的项目说明-->
+	<!-- Nav tabs -->
+
+	<div class="well">
+		<div class="container">
+			<div class="text-center">
+
+				<h1>Here is the descriptions of our project</h1>
+			</div>
+
+			<ul class="nav nav-tabs" role="tablist">
+				<li role="presentation" class="active"><a href="#home"
+					role="tab" data-toggle="tab">背景</a></li>
+				<li role="presentation"><a href="#profile" role="tab"
+					data-toggle="tab">已有技术</a></li>
+				<li role="presentation"><a href="#messages" role="tab"
+					data-toggle="tab">创新点</a></li>
+				<li role="presentation"><a href="#settings" role="tab"
+					data-toggle="tab">成果</a></li>
+			</ul>
+
+			<!-- Tab panes -->
+			<div class="tab-content">
+				<div role="tabpanel" class="tab-pane fade in active" id="home">
+					<p class="bg-success">Raw denim you probably haven't heard of
+						them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro
+						synth master cleanse. Mustache cliche tempor, williamsburg carles
+						vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher
+						synth. Cosby sweater eu banh mi, qui irure terry richardson ex
+						squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis
+						cardigan american apparel, butcher voluptate nisi qui. Raw denim
+						you probably haven't heard of them jean shorts Austin. Nesciunt
+						tofu stumptown aliqua, retro synth master cleanse. Mustache cliche
+						tempor, williamsburg carles vegan helvetica. Reprehenderit butcher
+						retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui
+						irure terry richardson ex squid. Aliquip placeat salvia cillum
+						iphone. Seitan aliquip quis cardigan american apparel, butcher
+						voluptate nisi qui</p>
+				</div>
+				<div role="tabpanel" class="tab-pane fade" id="profile">
+					<p class="bg-primary">Food truck fixie locavore, accusamus
+						mcsweeney's marfa nulla single-origin coffee squid. Exercitation
+						+1 labore velit, blog sartorial PBR leggings next level wes
+						anderson artisan four loko farm-to-table craft beer twee. Qui
+						photo booth letterpress, commodo enim craft beer mlkshk aliquip
+						jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic,
+						assumenda labore aesthetic magna delectus mollit. Keytar helvetica
+						VHS salvia yr, vero magna velit sapiente labore stumptown. Vegan
+						fanny pack odio cillum wes anderson 8-bit, sustainable jean shorts
+						beard ut DIY ethical culpa terry richardson biodiesel. Art party
+						scenester stumptown, tumblr butcher vero sint qui sapiente
+						accusamus tattooed echo park.Raw denim you probably haven't heard
+						of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro
+						synth master cleanse. Mustache cliche tempor, williamsburg carles
+						vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher
+						synth. Cosby sweater eu banh mi, qui irure terry richardson ex
+						squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis
+						cardigan american apparel, butcher voluptate nisi qui</p>
+				</div>
+				<div role="tabpanel" class="tab-pane fade" id="messages">
+					<p class="bg-info">Etsy mixtape wayfarers, ethical wes anderson
+						tofu before they sold out mcsweeney's organic lomo retro fanny
+						pack lo-fi farm-to-table readymade. Messenger bag gentrify
+						pitchfork tattooed craft beer, iphone skateboard locavore carles
+						etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony.
+						Leggings gentrify squid 8-bit cred pitchfork. Williamsburg banh mi
+						whatever gluten-free, carles pitchfork biodiesel fixie etsy retro
+						mlkshk vice blog. Scenester cred you probably haven't heard of
+						them, vinyl craft beer blog stumptown. Pitchfork sustainable tofu
+						synth chambray yr.Raw denim you probably haven't heard of them
+						jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth
+						master cleanse. Mustache cliche tempor, williamsburg carles vegan
+						helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher
+						synth. Cosby sweater eu banh mi, qui irure terry richardson ex
+						squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis
+						cardigan american apparel, butcher voluptate nisi qui</p>
+				</div>
+				<div role="tabpanel" class="tab-pane fade" id="settings">
+					<p class="bg-warning">Trust fund seitan letterpress, keytar raw
+						denim keffiyeh etsy art party before they sold out master cleanse
+						gluten-free squid scenester freegan cosby sweater. Fanny pack
+						portland seitan DIY, art party locavore wolf cliche high life echo
+						park Austin. Cred vinyl keffiyeh DIY salvia PBR, banh mi before
+						they sold out farm-to-table VHS viral locavore cosby sweater. Lomo
+						wolf viral, mustache readymade thundercats keffiyeh craft beer
+						marfa ethical. Wolf salvia freegan, sartorial keffiyeh echo park
+						vegan.Raw denim you probably haven't heard of them jean shorts
+						Austin. Nesciunt tofu stumptown aliqua, retro synth master
+						cleanse. Mustache cliche tempor, williamsburg carles vegan
+						helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher
+						synth. Cosby sweater eu banh mi, qui irure terry richardson ex
+						squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis
+						cardigan american apparel, butcher voluptate nisi qui</p>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<!-- 关于一些技术上的支持-->
+	<!-- 页面的尾部-->
+	<div class="well" id="footer">
+		<div class="container">
+			<div class="text-center">
+				<p>
+					Designed and built with all the love in the world by <a
+						href="https://twitter.com/mdo" target="_blank">@ws</a> and <a
+						href="https://twitter.com/fat" target="_blank">@dpc</a>.
+				</p>
+				<p>
+					Maintained by the <a href="https://github.com/orgs/twbs/people">core
+						team</a> with the help of <a
+						href="https://github.com/twbs/bootstrap/graphs/contributors">our
+						contributors</a>.
+				</p>
+				<p>
+					本项目源码受 <a
+						href="https://github.com/twbs/bootstrap/blob/master/LICENSE"
+						target="_blank">MIT</a> 开源协议保护，文档受 <a
+						href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>
+					开源协议保护。
+				</p>
+			</div>
+		</div>
+
+
+
+	</div>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+</body>
+</html>
